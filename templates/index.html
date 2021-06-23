@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block contents %}
+
+    <h1>Homepage</h1>
+
+    {% if filename %}
+    <h2>{{ filename }}</h2>
+    {% endif %}
+
+{% endblock %}
