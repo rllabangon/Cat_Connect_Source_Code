@@ -12,7 +12,7 @@
 
     <div class="form-container">
       <h2>Add a Cat</h2>
-      <form id="form-add-cat" method='POST' action="{{url_for('4')}}" enctype="multipart/form-data">
+      <form id="form-add-cat" method='POST' action="{{url_for('addcat')}}" enctype="multipart/form-data">
         <div class="form-group mb-3">
           <label for="cat_name" class="form-label">Name</label>
           <input type="text" name="cat_name" class="form-control" id="cat_name">
@@ -42,8 +42,6 @@
 
     </div>
 
-
-
   </section>
 
 
@@ -52,5 +50,3 @@
 
 
 {% endblock %}
-
-
