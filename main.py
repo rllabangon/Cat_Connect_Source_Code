@@ -43,6 +43,11 @@ def hello_world():
     our_cats = Cats.query.order_by(Cats.date_added)
     return render_template('index.html', cats=our_cats)
 
+@app.route("/catlist")
+def cat_list():
+    our_cats = Cats.query.order_by(Cats.date_added)
+    return render_template('cat_list.html', cats=our_cats)
+
 @app.route("/addcat", methods=['GET', 'POST'])
 def addcat():
 
@@ -73,7 +78,7 @@ def addcat():
         our_cats = Cats.query.order_by(Cats.date_added)
         db.session.add(cat)
         db.session.commit()
-        return render_template('index.html', cats=our_cats)
+        return render_template('cat_list.html', cats=our_cats)
 
     else:
         return render_template('add_cat.html')
