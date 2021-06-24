@@ -1,0 +1,57 @@
+{% extends 'base2.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='add_cat.css') }}">
+{% endblock %}
+
+{% block contents %}
+
+<div class="container">
+
+    <section class="add-cat-container my-5">
+
+        <div class="form-container">
+
+            <h2>Add a Cat</h2>
+
+            <form id="form-add-cat" method='POST' action="{{url_for('addcat')}}" enctype="multipart/form-data">
+
+                {{ form.hidden_tag() }}
+                <div class="form-group mb-3">
+                    {{ form.name.label(for="cat_name", class="form-label") }}
+                    {{ form.name(class="form-control", id="cat_name") }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form.breed.label(for="breed", class="form-label") }}
+                    {{ form.breed(class="form-control", id="breed") }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form.age.label(for="age", class="form-label") }}
+                    {{ form.age(class="form-control", id="age") }}
+                </div>
+
+                <div class="form-group mb-3">
+                    {{ form.description.label(for="description", class="form-label") }}
+                    {{ form.description(class="form-control", id="description") }}
+                </div>
+
+                <div class="form-group mb-3 custom-file">
+                    {{ form.image(class="custom-file-input", id="image") }}
+                    {{ form.image.label(for="image", class="custom-file-label", id="image") }}
+                </div>
+
+                {{ form.submit_cat(class="btn btn-primary") }}
+            
+            </form>
+
+
+        </div>
+
+    </section>
+    
+
+</div>
+
+{% endblock %}

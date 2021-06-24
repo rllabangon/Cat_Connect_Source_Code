@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\My PC\Documents\ICT2\catconnect\venv"
+VIRTUAL_ENV="C:\Users\Jet\Documents\Python\catconnect_new\catconnect\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

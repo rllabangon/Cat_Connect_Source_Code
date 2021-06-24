@@ -1,0 +1,20 @@
+body {
+	color: #fff !important;
+}
+
+.card p.card-text {
+	color: #000 !important;
+}
+
+.add-cat-container {
+	color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-container {
+	width: 400px;
+	border: 1px #fff solid;
+	padding: 2rem;
+}

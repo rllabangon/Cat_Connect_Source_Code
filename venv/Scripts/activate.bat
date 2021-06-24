@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\My PC\Documents\ICT2\catconnect\venv
+set VIRTUAL_ENV=C:\Users\Jet\Documents\Python\catconnect_new\catconnect\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
