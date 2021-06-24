@@ -6,8 +6,14 @@
 
     <h1>Homepage</h1>
 
-    {% if filename %}
-    <h2>{{ filename }}</h2>
+    {% if cats %}
+        {% for cat_info in cats %}
+            <p>Name: {{ cat_info.name }}</p>
+            <p>Breed: {{ cat_info.breed }}</p>
+            <p>Age: {{ cat_info.age }}</p>
+            <p>Description: {{ cat_info.description }}</p>
+            <img class="cat-img" src="{{ url_for('static', filename='uploads/' + cat_info.image) }}">
+        {% endfor %}
     {% endif %}
 
 {% endblock %}
