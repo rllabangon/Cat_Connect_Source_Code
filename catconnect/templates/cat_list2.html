@@ -1,35 +1,67 @@
 {% extends 'base2.html' %}
 
 {% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='cat_list.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='cat_list.css') }}">
 {% endblock %}
 
 {% block contents %}
 
-<div class="container">
+<div class="container mt-5">
 
-    {% if cats %}
+  <table id="myTable" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Breed</th>
+            <th>Age</th>
+            <th>Description</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cat in cats %}
 
-        {% for cat_info in cats %}
-            <div class="row">
-                <div class="col-md-4">
-                  <div class="card" style="width: 18rem;">
-                    <img src="{{ url_for('static', filename='uploads/' + cat_info.image) }}" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <h5 class="card-title">{{ cat_info.name }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Breed: {{ cat_info.breed }} - Age: {{ cat_info.age }}</h6>
-                        <p class="card-text">{{ cat_info.description }}</p>
-                           <a href="#" class="btn mr-2"><i class="fas fa-link"></i> Visit Site</a>
-                        <a href="#" class="btn "><i class="fab fa-github"></i> Github</a>
-                      </div>
-                  </div>
-               </div>
-            </div>
+            <tr>
+                <td>{{ cat.id }}</td>
+                <td>{{ cat.name }}</td>
+                <td>{{ cat.breed }}</td>
+                <td>{{ cat.age }}</td>
+                <td>{{ cat.description }}</td>
+                <td> <a href="{{ url_for('catinfo', cat_id=cat.id) }}" data-id="{{cat.id}}" class="btn btn-info btnCatInfo">More Info</a> <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-primary"  data-id="{{cat.id}}">Edit</a> <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-danger btnDeleteCat"  data-catid="{{cat.id}}" data-catname="{{cat.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a> </td>
 
-        {% endfor %}
-    {% endif %}
+            </tr>
+
+        {% endfor%}
+    </tbody>
+  </table>
+
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="form-delete-cat" action="{{url_for('delete_cat')}}" method="POST">
+        <input type="number" name="catid" id="catid" hidden>
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete a Cat</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure to delete <span class="cat-name"></span>? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
+{% endblock %}
 
+{% block jscode %}
+<script src="{{url_for('static', filename='script.js')}}"></script>
 {% endblock %}

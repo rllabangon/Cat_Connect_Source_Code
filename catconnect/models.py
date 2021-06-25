@@ -62,7 +62,7 @@ class Cats(db.Model):
     breed = db.Column(db.String(80), index=True, unique=False) #author surname
     age = db.Column(db.Integer, index=True, unique=False) #the month of book suggestion
     description = db.Column(db.String(125), index=True, unique=False) #the year of book suggestion
-    image = db.Column(db.String(80), index=True, unique=True)
+    image = db.Column(db.String(80), index=True, unique=False)
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Get a nice printout for Book objects

@@ -1,9 +1,9 @@
 body {
-    background-color: #152733 !important;
-    color: #fff;
+	/* background-color: #152733 !important; */
+	/* color: #fff !important; */
 }
 
 .cat-img {
-    display: inline-block;
-    width: 30rem;
+	display: inline-block;
+	width: 30rem;
 }

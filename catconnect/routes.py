@@ -7,18 +7,9 @@ from flask_login import login_user, logout_user, login_required, current_user
 import urllib.request
 import os
 from werkzeug.utils import secure_filename
-
-UPLOAD_FOLDER = 'catconnect/static/uploads/'
-
-app.secret_key = 'secret key'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
-
-# ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+from catconnect import UPLOAD_FOLDER
+from catconnect import allowed_file
+from .models import Cats
 
 @app.route('/')
 @app.route('/home')
@@ -134,15 +125,83 @@ def addcat():
             db.session.rollback()
         db.session.commit()
 
-        return render_template('cat_list.html', cats=our_cats)
+        return render_template('cat_list2.html', cats=our_cats)
 
     else:
         return render_template('add_cat.html')
 
+@app.route("/editcat/<int:id>", methods=['GET'])
+def editcat(id):
+
+    cat = Cats.query.get(id)
+
+    return render_template('edit_cat.html', cat=cat)
+
+@app.route('/updatecat/<int:id>', methods=['POST'])
+def updatecat(id):
+
+    cat_id = id
+    cat_name = request.form['cat_name']
+    cat_breed = request.form['breed']
+    cat_age = request.form['age']
+    cat_desc = request.form['description']
+
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # print('upload_image filename: ' + filename)
+        flash('Image successfully uploaded and displayed below')
+        # return render_template('index.html', filename=filename)
+    else:
+        flash('Allowed image types are - png, jpg, jpeg, gif')
+        return redirect(request.url)
+
+    update_cat = Cats.query.get(cat_id)
+    update_cat.name = cat_name
+    update_cat.breed = cat_breed
+    update_cat.age = cat_age
+    update_cat.description = cat_desc
+    update_cat.image = filename
+
+    try:
+        db.session.commit()
+    except:
+        db.session.rollback()
+
+    return redirect(url_for('cat_list'))
+
+@app.route('/delete_cat', methods=['POST'])
+def delete_cat():
+
+    catid = request.form['catid']
+    db.session.delete(Cats.query.get(catid))
+    try: 
+        db.session.commit()
+    except:
+        db.session.rollback()
+
+    return redirect(url_for('cat_list'))
+
+@app.route('/catinfo/<int:cat_id>')
+def catinfo(cat_id):
+
+    cat = Cats.query.get(cat_id)
+
+    return render_template('cat_info.html', cat=cat)
+
+
+
 @app.route("/catlist")
 def cat_list():
     our_cats = Cats.query.order_by(Cats.date_added)
-    return render_template('cat_list.html', cats=our_cats)
+    return render_template('cat_list2.html', cats=our_cats)
 
 
 

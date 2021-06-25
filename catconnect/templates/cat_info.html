@@ -1,0 +1,30 @@
+{% extends 'base2.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='cat_info.css') }}">
+{% endblock %}
+
+{% block contents %}
+
+<div class="container">
+
+  {% if cat %}
+  
+    <section class="cat-info-container my-5">
+
+        <img src="{{ url_for('static', filename='uploads/' + cat.image) }}" class="cat-image" alt="...">
+        <div class="cat-infos-container mt-4">
+            <h4><strong class="pet-name-field">Pet Name:</strong> <span class="cat-name">{{cat.name}}</span></h4>
+            <p><strong class="field-title">Breed: </strong>{{cat.breed}}</p>
+            <p><strong class="field-title">Age: </strong>{{cat.age}}</p>
+            <p><strong class="field-title">Description: </strong>{{cat.description}}</p>
+            <button class="btn btn-success">Adopt Now</button>
+        </div>
+
+    </section>
+  {% endif %}
+</div>
+
+
+
+{% endblock %}

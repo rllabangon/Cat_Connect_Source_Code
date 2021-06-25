@@ -1,0 +1,53 @@
+{% extends 'base2.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='add_cat.css') }}">
+{% endblock %}
+
+{% block contents %}
+
+<div class="container">
+
+  {% if cat %}
+  
+    <section class="add-cat-container my-5">
+
+        <div class="form-container">
+        <h2>Edit a Cat</h2>
+        <form id="form-add-cat" method='POST' action="{{url_for('updatecat', id=cat.id)}}" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+            <label for="cat_name" class="form-label">Name</label>
+            <input type="text" name="cat_name" class="form-control" id="cat_name" value="{{cat.name}}" required>
+            </div>
+            <div class="form-group mb-3">
+            <label for="breed" class="form-label">Breed</label>
+            <input type="text" name="breed" class="form-control" id="breed" value="{{cat.breed}}" required>
+            </div>
+            <div class="form-group mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" name="age" class="form-control" id="age" value="{{cat.age}}" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea name="description" class="form-control" id="description" value="{{cat.description}}" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group mb-3 custom-file">
+            <input type="file" name="file" class="custom-file-input" id="file" value="{{cat.image}}" required>
+            <label class="custom-file-label" for="file">Upload Image</label>
+            <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        </div>
+
+    </section>
+  {% endif %}
+</div>
+
+
+
+{% endblock %}
