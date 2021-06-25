@@ -43,9 +43,9 @@
                 <td>{{ cat.breed }}</td>
                 <td>{{ cat.age }}</td>
                 <td>  
-                  <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-outline-warning"  data-id="{{cat.id}}">Edit</a> 
-                  <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-outline-danger btnDeleteCat"  data-catid="{{cat.id}}" data-catname="{{cat.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a> 
-                  <a href="{{ url_for('catinfo', cat_id=cat.id) }}" data-id="{{cat.id}}" class="btn btn-outline-success btnCatInfo">More Info</a>
+                  <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-outline-dark"  data-id="{{cat.id}}">Edit</a> 
+                  <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-outline-dark btnDeleteCat"  data-catid="{{cat.id}}" data-catname="{{cat.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a> 
+                  <a href="{{ url_for('catinfo', cat_id=cat.id) }}" data-id="{{cat.id}}" class="btn btn-outline-dark btnCatInfo">More Info</a>
                 </td>
 
             </tr>

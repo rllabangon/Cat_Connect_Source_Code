@@ -207,6 +207,16 @@ def catinfo(cat_id):
 
     return render_template('cat_info.html', cat=cat)
 
+@app.route('/adopt_cat', methods=['POST'])
+def adopt_cat():
+
+    confirmation = request.form['adopt_cat_confirm']
+
+    if confirmation == 'confirm':
+        flash('Your request is pending for approval. Please wait for more updates.', 'success')
+
+    return redirect(url_for('cat_list'))
+
 
 
 @app.route("/catlist")
