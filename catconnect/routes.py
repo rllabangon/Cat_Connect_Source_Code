@@ -1,3 +1,6 @@
+# This python file contains the routes of the website which include the
+# home page, login page, register page, etc.
+
 from catconnect import app
 from flask import render_template, redirect, url_for, flash, request
 from catconnect.models import Item, User, Cats
@@ -19,6 +22,7 @@ def home_page():
 @app.route('/adoptionpage', methods=['GET', 'POST'])
 @login_required
 def adoption_page():
+    # initialize an instance of a CatAdaptForm and CancelAdoptForm
     cat_adopt_form = CatAdoptForm()
     cancel_adopt_form = CancelAdoptForm()
     if request.method == "POST":
@@ -50,8 +54,10 @@ def adoption_page():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():
+    # initialize an instance of a RegisterForm 
     form = RegisterForm()
     if form.validate_on_submit():
+        # if the input fields are valid, then we will register the new user
         user_to_create = User(username=form.username.data,
                               email_address=form.email_address.data,
                               password=form.password1.data)
@@ -68,8 +74,10 @@ def register_page():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_page():
+    # initialize an instance of a LoginForm
     form = LoginForm()
     if form.validate_on_submit():
+        # checking if the input username and password are valid
         attempted_user = User.query.filter_by(username= form.username.data).first()
         if attempted_user and attempted_user.check_password_correction(
                 attempted_password=form.password.data
@@ -82,6 +90,7 @@ def login_page():
 
     return render_template('login.html', form=form)
 
+# Logging out the user
 @app.route('/logout')
 def logout_page():
     logout_user()
@@ -93,11 +102,13 @@ def logout_page():
 def addcat():
 
     if request.method == 'POST':
+        # getting the cat's info to be added to the Cats table
         cat_name = request.form['cat_name']
         cat_breed = request.form['breed']
         cat_age = request.form['age']
         cat_desc = request.form['description']
 
+        # checking of a valid photo file
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -144,13 +155,14 @@ def editcat(id):
 @app.route('/updatecat/<int:id>', methods=['POST'])
 @login_required
 def updatecat(id):
-
+    # getting all the current info and put it on an input field
     cat_id = id
     cat_name = request.form['cat_name']
     cat_breed = request.form['breed']
     cat_age = request.form['age']
     cat_desc = request.form['description']
 
+    # checking if the photo is a valid file
     if 'file' not in request.files:
         flash('No file part')
         return redirect(request.url)
@@ -168,6 +180,7 @@ def updatecat(id):
         flash('Allowed image types are - png, jpg, jpeg, gif')
         return redirect(request.url)
 
+    # updating the cat
     update_cat = Cats.query.get(cat_id)
     update_cat.name = cat_name
     update_cat.breed = cat_breed
@@ -187,7 +200,7 @@ def updatecat(id):
 @app.route('/delete_cat', methods=['POST'])
 @login_required
 def delete_cat():
-
+    # delete a cat using its id
     catid = request.form['catid']
     db.session.delete(Cats.query.get(catid))
     try: 
@@ -202,14 +215,14 @@ def delete_cat():
 @app.route('/catinfo/<int:cat_id>')
 @login_required
 def catinfo(cat_id):
-
+    # get a certain cat to get its info
     cat = Cats.query.get(cat_id)
 
     return render_template('cat_info.html', cat=cat)
 
 @app.route('/adopt_cat', methods=['POST'])
 def adopt_cat():
-
+    # Checking if the adopt cat was clicked
     confirmation = request.form['adopt_cat_confirm']
 
     if confirmation == 'confirm':
@@ -218,7 +231,7 @@ def adopt_cat():
     return redirect(url_for('cat_list'))
 
 
-
+# route for the list of cats
 @app.route("/catlist")
 @login_required
 def cat_list():

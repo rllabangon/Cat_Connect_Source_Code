@@ -16,6 +16,11 @@
 	align-items: center;
 }
 
+.homepage_logo {
+	width: 15rem;
+	padding-bottom: 1.7rem;
+}
+
 .cat-img {
 	display: inline-block;
 	width: 30rem;

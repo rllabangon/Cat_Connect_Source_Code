@@ -1,3 +1,5 @@
+# This python file contains the database fields.
+
 from catconnect import db, login_manager
 from catconnect import bcrypt
 from flask_login import UserMixin
