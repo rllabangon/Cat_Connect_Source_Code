@@ -1,5 +1,6 @@
 body {
-	background-color: #152733 !important;
+	/* background-color: #152733 !important; */
+	background-color: #212121 !important;
 	color: #fff !important;
 }
 
@@ -11,7 +12,7 @@ body {
 }
 
 .cat-image {
-	width: 15rem;
+	max-width: 15rem;
 	border-radius: 5%;
 }
 

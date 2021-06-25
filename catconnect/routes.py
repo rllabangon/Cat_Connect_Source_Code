@@ -76,7 +76,7 @@ def login_page():
         ):
             login_user(attempted_user)
             flash(f'Success! You are logged in as: {attempted_user.username}', category='success')
-            return redirect(url_for('adoption_page'))
+            return redirect(url_for('home_page'))
         else:
             flash('Username and password do not match! Please try again.', category='danger')
 
@@ -89,6 +89,7 @@ def logout_page():
     return redirect(url_for("home_page"))
 
 @app.route("/addcat", methods=['GET', 'POST'])
+@login_required
 def addcat():
 
     if request.method == 'POST':
@@ -108,7 +109,7 @@ def addcat():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             # print('upload_image filename: ' + filename)
-            flash('Image successfully uploaded and displayed below')
+            flash('Image successfully uploaded.')
             # return render_template('index.html', filename=filename)
         else:
             flash('Allowed image types are - png, jpg, jpeg, gif')
@@ -119,18 +120,21 @@ def addcat():
         
         db.session.add(cat)
         try:
+            flash('Cat added successfully!', 'success')
             db.session.commit()
         except:
             # Add a message for unsuccessful addition of cat
+            flash('Cannot add the cat. Please try again.', 'danger')
             db.session.rollback()
         db.session.commit()
 
-        return render_template('cat_list2.html', cats=our_cats)
+        return redirect(url_for('cat_list'))
 
     else:
         return render_template('add_cat.html')
 
 @app.route("/editcat/<int:id>", methods=['GET'])
+@login_required
 def editcat(id):
 
     cat = Cats.query.get(id)
@@ -138,6 +142,7 @@ def editcat(id):
     return render_template('edit_cat.html', cat=cat)
 
 @app.route('/updatecat/<int:id>', methods=['POST'])
+@login_required
 def updatecat(id):
 
     cat_id = id
@@ -157,7 +162,7 @@ def updatecat(id):
         filename = secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         # print('upload_image filename: ' + filename)
-        flash('Image successfully uploaded and displayed below')
+        flash('Image successfully uploaded.')
         # return render_template('index.html', filename=filename)
     else:
         flash('Allowed image types are - png, jpg, jpeg, gif')
@@ -171,25 +176,31 @@ def updatecat(id):
     update_cat.image = filename
 
     try:
+        flash('The cat updated successfully!', 'success')
         db.session.commit()
     except:
+        flash('The update was unsuccessful. Please try again.', 'danger')
         db.session.rollback()
 
     return redirect(url_for('cat_list'))
 
 @app.route('/delete_cat', methods=['POST'])
+@login_required
 def delete_cat():
 
     catid = request.form['catid']
     db.session.delete(Cats.query.get(catid))
     try: 
+        flash('Deletion completed!', 'success')
         db.session.commit()
     except:
+        flash('Deletion was unsuccessful. Please try again', 'danger')
         db.session.rollback()
 
     return redirect(url_for('cat_list'))
 
 @app.route('/catinfo/<int:cat_id>')
+@login_required
 def catinfo(cat_id):
 
     cat = Cats.query.get(cat_id)
@@ -199,6 +210,7 @@ def catinfo(cat_id):
 
 
 @app.route("/catlist")
+@login_required
 def cat_list():
     our_cats = Cats.query.order_by(Cats.date_added)
     return render_template('cat_list2.html', cats=our_cats)

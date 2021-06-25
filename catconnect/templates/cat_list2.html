@@ -6,6 +6,22 @@
 
 {% block contents %}
 
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+        {% if category == 'success' %}
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        {% else %}
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        {% endif %}
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <div class="container mt-5">
 
   <table id="myTable" class="display">
@@ -15,7 +31,6 @@
             <th>Name</th>
             <th>Breed</th>
             <th>Age</th>
-            <th>Description</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -27,8 +42,11 @@
                 <td>{{ cat.name }}</td>
                 <td>{{ cat.breed }}</td>
                 <td>{{ cat.age }}</td>
-                <td>{{ cat.description }}</td>
-                <td> <a href="{{ url_for('catinfo', cat_id=cat.id) }}" data-id="{{cat.id}}" class="btn btn-info btnCatInfo">More Info</a> <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-primary"  data-id="{{cat.id}}">Edit</a> <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-danger btnDeleteCat"  data-catid="{{cat.id}}" data-catname="{{cat.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a> </td>
+                <td>  
+                  <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-outline-warning"  data-id="{{cat.id}}">Edit</a> 
+                  <a href="{{ url_for('editcat', id=cat.id) }}" class="btn btn-outline-danger btnDeleteCat"  data-catid="{{cat.id}}" data-catname="{{cat.name}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete</a> 
+                  <a href="{{ url_for('catinfo', cat_id=cat.id) }}" data-id="{{cat.id}}" class="btn btn-outline-success btnCatInfo">More Info</a>
+                </td>
 
             </tr>
 

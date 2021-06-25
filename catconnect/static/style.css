@@ -1,6 +1,19 @@
-body {
-	/* background-color: #152733 !important; */
-	/* color: #fff !important; */
+/* body {
+	background-color: #152733 !important;
+	color: #fff !important;
+} */
+
+#main {
+	height: calc(100vh - 56px);
+}
+
+.login-container,
+.register-container {
+	/* width: 20rem; */
+	height: calc(100vh - 56px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .cat-img {

@@ -13,6 +13,11 @@ body {
 	margin-bottom: 2rem;
 }
 
+th {
+	background-color: #343a40;
+	color: #fff;
+}
+
 /* .btn {
 	border: 5px solid;
 	border-image-slice: 1;
