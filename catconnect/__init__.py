@@ -16,9 +16,9 @@ login_manager.login_message_category = "info"
 
 UPLOAD_FOLDER = 'catconnect/static/uploads/'
 
-app.secret_key = 'secret key'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+app.secret_key = 'secret key' # secret key to defend against CORS attack
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER # the path for the cat's photo file
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # max file size of the file upload
 
 # ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])

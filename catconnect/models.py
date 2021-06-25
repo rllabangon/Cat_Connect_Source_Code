@@ -3,10 +3,12 @@ from catconnect import bcrypt
 from flask_login import UserMixin
 from datetime import datetime
 
+# load the user if it is logged in
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Our user table model
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(length=30), nullable=False, unique=True)
@@ -32,7 +34,7 @@ class User(db.Model, UserMixin):
     def can_sell(self, item_obj):
         return item_obj in self.items
 
-
+# this should be the Cats model. don't mind this
 class Item(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(length=30), nullable=False, unique=True)
@@ -57,15 +59,14 @@ class Item(db.Model):
 
 class Cats(db.Model):
     id = db.Column(db.Integer, primary_key=True) #primary key column, automatically generated IDs
-    name = db.Column(db.String(80), index=True, unique=False) # book title
-    #Checkpoint #1: insert your code here
-    breed = db.Column(db.String(80), index=True, unique=False) #author surname
-    age = db.Column(db.Integer, index=True, unique=False) #the month of book suggestion
-    description = db.Column(db.String(125), index=True, unique=False) #the year of book suggestion
+    name = db.Column(db.String(80), index=True, unique=False) 
+    breed = db.Column(db.String(80), index=True, unique=False) 
+    age = db.Column(db.Integer, index=True, unique=False) 
+    description = db.Column(db.String(125), index=True, unique=False)
     image = db.Column(db.String(80), index=True, unique=False)
-    date_added = db.Column(db.DateTime, default=datetime.utcnow)
+    date_added = db.Column(db.DateTime, default=datetime.utcnow) # automatically added when has a new record
 
-    # Get a nice printout for Book objects
+    # Get a nice printout for Cat objects
     def __repr__(self):
         return "{} in: {},{}".format(self.name, self.breed, self.age, self.description)
 
